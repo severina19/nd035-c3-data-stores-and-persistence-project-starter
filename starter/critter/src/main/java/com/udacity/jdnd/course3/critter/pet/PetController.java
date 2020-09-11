@@ -48,18 +48,6 @@ public class PetController {
         //throw new UnsupportedOperationException();
     }
 
-    private PetDTO convertPetToPetDTO(Pet pet){
-        PetDTO petDTO = new PetDTO();
-        BeanUtils.copyProperties(pet, petDTO);
-        return petDTO;
-    }
-
-    private Pet convertPetDTOToPet(PetDTO petDTO){
-        Pet pet = new Pet();
-        BeanUtils.copyProperties(petDTO, pet);
-        return pet;
-    }
-
     private PetDTO getPetDTO(Pet pet) {
         PetDTO petDTO = new PetDTO();
         petDTO.setId(pet.getId());

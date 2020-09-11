@@ -95,10 +95,11 @@ public class UserController {
 
     private EmployeeDTO convertEmployeeToEmployeeDTO(Employee employee){
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setId(employee.getId());
+        /*employeeDTO.setId(employee.getId());
         employeeDTO.setName(employee.getName());
         employeeDTO.setDaysAvailable(employee.getDaysAvailable());
-        employeeDTO.setSkills(employee.getSkills());
+        employeeDTO.setSkills(employee.getSkills());*/
+        BeanUtils.copyProperties(employee, employeeDTO);
         return employeeDTO;
     }
 
