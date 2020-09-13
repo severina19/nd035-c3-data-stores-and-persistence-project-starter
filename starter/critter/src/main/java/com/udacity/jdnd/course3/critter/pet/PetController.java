@@ -4,8 +4,12 @@ import com.udacity.jdnd.course3.critter.repository.PetRepository;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,14 +25,17 @@ public class PetController {
     PetService petService;
 
     @PostMapping
-    public PetDTO savePet(@RequestBody PetDTO petDTO) {
+    public PetDTO savePet(@Valid @RequestBody PetDTO petDTO) {
         Pet pet = new Pet();
         pet.setType(petDTO.getType());
         pet.setName(petDTO.getName());
         pet.setBirthDate(petDTO.getBirthDate());
         pet.setNotes(petDTO.getNotes());
-        return getPetDTO(petService.savePet(pet, petDTO.getOwnerId()));
+        pet = petService.savePet(pet, petDTO.getOwnerId());
+        petDTO = getPetDTO(pet);
+        return petDTO;
     }
+
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
@@ -40,7 +47,6 @@ public class PetController {
         List<Pet> pets = petService.getAllPets();
         return pets.stream().map(this::getPetDTO).collect(Collectors.toList());
     }
-
 
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
         List<Pet> pets = petService.getPetsByCustomerId(ownerId);

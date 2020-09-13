@@ -15,14 +15,14 @@ import java.util.Map;
 public class Pet implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     PetType type;
     String name;
     LocalDate birthDate;
     String notes;
 
-    @ManyToOne(targetEntity = Customer.class)
+    @ManyToOne(targetEntity = Customer.class, optional = false)
     Customer customer;
 
     public Pet() {
