@@ -34,7 +34,7 @@ public class PetService {
         Customer customer = customerRepository.getOne(customerId);
         pet.setCustomer(customer);
         pet = petRepository.save(pet);
-        customer.insertPet(pet);
+        customer.addPet(pet);
         customerRepository.save(customer);
         return pet;
     }

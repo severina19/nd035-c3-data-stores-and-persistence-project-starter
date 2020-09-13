@@ -31,7 +31,7 @@ public class Customer extends User implements Serializable {
         this.pets = pets;
     }
 
-    public void insertPet(Pet pet) {
+    public void addPet(Pet pet) {
         pets.add(pet);
     }
 

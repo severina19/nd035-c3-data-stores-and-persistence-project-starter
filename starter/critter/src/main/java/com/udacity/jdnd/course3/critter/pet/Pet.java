@@ -4,6 +4,7 @@ import com.udacity.jdnd.course3.critter.schedule.Schedule;
 import com.udacity.jdnd.course3.critter.user.Customer;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,13 +16,14 @@ import java.util.Map;
 public class Pet implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     PetType type;
     String name;
     LocalDate birthDate;
     String notes;
 
+    @NotNull
     @ManyToOne(targetEntity = Customer.class, optional = false)
     Customer customer;
 
