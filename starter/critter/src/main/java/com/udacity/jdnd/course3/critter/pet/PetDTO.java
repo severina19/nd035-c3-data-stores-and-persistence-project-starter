@@ -1,6 +1,7 @@
 package com.udacity.jdnd.course3.critter.pet;
 
-import javax.validation.constraints.NotEmpty;
+import com.udacity.jdnd.course3.critter.validator.IsValidPetDTO;
+
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -8,6 +9,7 @@ import java.time.LocalDate;
  * Represents the form that pet request and response data takes. Does not map
  * to the database directly.
  */
+@IsValidPetDTO
 public class PetDTO {
     private long id;
     private PetType type;

@@ -53,6 +53,12 @@ public class UserController {
         return convertCustomerToCustomerDTO(customer);
     }
 
+    @GetMapping("/customer/{customerId}")
+    public CustomerDTO getCustomerById(@PathVariable long customerId){
+        Customer customer = customerService.getCustomerById(customerId);
+        return convertCustomerToCustomerDTO(customer);
+    }
+
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         System.out.println(employeeDTO.getSkills());
@@ -68,7 +74,7 @@ public class UserController {
         return employees.stream().map(this::convertEmployeeToEmployeeDTO).collect(Collectors.toList());
     }
 
-    @PostMapping("/employee/{employeeId}")
+    @GetMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
         Employee employee = employeeService.getEmployeeById(employeeId);
         return convertEmployeeToEmployeeDTO(employee);

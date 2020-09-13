@@ -1,8 +1,8 @@
 package com.udacity.jdnd.course3.critter.service;
-
 import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.Employee;
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
+import com.udacity.jdnd.course3.critter.user.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +18,18 @@ public class EmployeeService {
 
     @Autowired
     EmployeeRepository employeeRepository;
-    public Employee getEmployeeById(Long id){
+
+    public Employee getEmployeeById(Long employeeId){
         Employee employee = new Employee();
-        Employee employeeOptional = employeeRepository.findById(id).orElse(employee);
-        return employeeOptional;
+        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
+
+        if (optionalEmployee.isPresent()) {
+            employee = optionalEmployee.get();
+        } else {
+            String errorString = String.format("Employee with id %o Not Found", employeeId);
+            throw new UserNotFoundException(errorString);
+        }
+        return employee;
     }
     public Employee saveEmployee(Employee employee){
         return employeeRepository.save(employee);
@@ -35,7 +43,7 @@ public class EmployeeService {
         return employees;
     }
     public void setAvailability(Set<DayOfWeek> daysAvailable, long employeeId) {
-        Employee employee = employeeRepository.getOne(employeeId);
+        Employee employee = getEmployeeById(employeeId);
         employee.setDaysAvailable(daysAvailable);
         employeeRepository.save(employee);
     }

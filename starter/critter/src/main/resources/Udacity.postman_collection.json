@@ -134,7 +134,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/user/employee/3",
+					"raw": "http://localhost:8082/user/employee/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -143,7 +143,7 @@
 					"path": [
 						"user",
 						"employee",
-						"3"
+						"1"
 					]
 				}
 			},
@@ -211,7 +211,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/user/employee/3",
+					"raw": "http://localhost:8082/user/employee/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -220,7 +220,7 @@
 					"path": [
 						"user",
 						"employee",
-						"3"
+						"1"
 					]
 				}
 			},
@@ -233,7 +233,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"employeeIds\": [3],\n  \"petIds\": [2],\n  \"date\": \"2019-12-16T04:43:57.995Z\",\n  \"activities\": [\"WALKING\"]\n}",
+					"raw": "{\n  \"employeeIds\": [2],\n  \"petIds\": [1],\n  \"date\": \"2019-12-16T04:43:57.995Z\",\n  \"activities\": [\"WALKING\"]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -279,7 +279,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/schedule/pet/2",
+					"raw": "http://localhost:8082/schedule/pet/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -288,7 +288,7 @@
 					"path": [
 						"schedule",
 						"pet",
-						"2"
+						"1"
 					]
 				}
 			},
@@ -329,6 +329,46 @@
 						"schedule",
 						"employee",
 						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Schedule By Customer",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"MONDAY\", \"TUESDAY\", \"FRIDAY\"]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/schedule/customer/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"schedule",
+						"customer",
+						"1"
 					]
 				}
 			},
@@ -458,15 +498,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/user/customer",
+					"raw": "http://localhost:8082/pet",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8082",
 					"path": [
-						"user",
-						"customer"
+						"pet"
 					]
 				}
 			},
@@ -573,19 +612,41 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8082/pet",
+			"name": "Find Pet By Id",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8082/pet",
+					"raw": "http://localhost:8082/pet/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8082",
 					"path": [
-						"pet"
+						"pet",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Employee By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/user/employee/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"user",
+						"employee",
+						"1"
 					]
 				}
 			},

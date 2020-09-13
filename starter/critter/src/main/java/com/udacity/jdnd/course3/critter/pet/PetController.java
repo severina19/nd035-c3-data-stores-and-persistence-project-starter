@@ -1,16 +1,11 @@
 package com.udacity.jdnd.course3.critter.pet;
 
-import com.udacity.jdnd.course3.critter.repository.PetRepository;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,15 +30,17 @@ public class PetController {
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        return convertPetToPetDTO(petService.getPetById(petId));
+        Pet pet = petService.getPetById(petId);
+        return convertPetToPetDTO(pet);
     }
 
     @GetMapping
-    public List<PetDTO>  getPets(@PathVariable long petId) {
+    public List<PetDTO>  getAllPets() {
         List<Pet> pets = petService.getAllPets();
         return pets.stream().map(this::convertPetToPetDTO).collect(Collectors.toList());
     }
 
+    @GetMapping("/owner/{ownerId}")
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
         List<Pet> pets = petService.getPetsByCustomerId(ownerId);
         return pets.stream().map(this::convertPetToPetDTO).collect(Collectors.toList());

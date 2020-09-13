@@ -1,7 +1,6 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
 import com.udacity.jdnd.course3.critter.pet.Pet;
-import com.udacity.jdnd.course3.critter.user.Customer;
 import com.udacity.jdnd.course3.critter.user.Employee;
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 
@@ -19,7 +18,6 @@ public class Schedule implements Serializable {
 
     @ManyToMany
     List<Employee> employee;
-
 
     @ManyToMany
     List<Pet> pet;

@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.service;
 
 import com.udacity.jdnd.course3.critter.pet.Pet;
 import com.udacity.jdnd.course3.critter.pet.PetDTO;
+import com.udacity.jdnd.course3.critter.pet.PetNotFoundException;
 import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
 import com.udacity.jdnd.course3.critter.repository.PetRepository;
 
@@ -23,15 +24,28 @@ public class PetService {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    CustomerService customerService;
+
     public List<Pet> getAllPets(){
         return petRepository.findAll();
     };
 
     public Pet getPetById(long petId) {
-        return petRepository.getOne(petId);
+        Pet pet = new Pet();
+        Optional<Pet> optionalPet = petRepository.findById(petId);
+
+        if (optionalPet.isPresent()) {
+            pet = optionalPet.get();
+        } else {
+            String errorString = String.format("Pet with id %o Not Found", petId);
+            throw new PetNotFoundException(errorString);
+        }
+        return pet;
+
     }
     public Pet savePet(Pet pet, Long customerId){
-        Customer customer = customerRepository.getOne(customerId);
+        Customer customer = customerService.getCustomerById(customerId);
         pet.setCustomer(customer);
         pet = petRepository.save(pet);
         customer.addPet(pet);
