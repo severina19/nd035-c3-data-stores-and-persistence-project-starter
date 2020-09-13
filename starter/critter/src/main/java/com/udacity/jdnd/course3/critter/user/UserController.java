@@ -35,10 +35,8 @@ public class UserController {
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
         Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDTO, customer);
         List<Long> petIds = customerDTO.getPetIds();
-        customer.setNotes(customerDTO.getNotes());
-        customer.setName(customerDTO.getName());
-        customer.setPhoneNumber(customerDTO.getPhoneNumber());
         Customer savedCustomer = customerService.saveCustomer(customer, petIds);
         return convertCustomerToCustomerDTO(savedCustomer);
     }
@@ -101,11 +99,9 @@ public class UserController {
 
     private CustomerDTO convertCustomerToCustomerDTO(Customer customer) {
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setId(customer.getId());
-        customerDTO.setName(customer.getName());
+        BeanUtils.copyProperties(customer, customerDTO);
         List<Long> petIds = customer.getPets().stream().map(Pet::getId).collect(Collectors.toList());
         customerDTO.setPetIds(petIds);
-        customerDTO.setPhoneNumber(customer.getPhoneNumber());
         return customerDTO;
     }
 
