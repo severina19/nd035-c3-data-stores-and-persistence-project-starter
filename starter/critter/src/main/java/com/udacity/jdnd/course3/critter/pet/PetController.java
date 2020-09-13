@@ -27,41 +27,32 @@ public class PetController {
     @PostMapping
     public PetDTO savePet(@Valid @RequestBody PetDTO petDTO) {
         Pet pet = new Pet();
-        pet.setType(petDTO.getType());
-        pet.setName(petDTO.getName());
-        pet.setBirthDate(petDTO.getBirthDate());
-        pet.setNotes(petDTO.getNotes());
+        BeanUtils.copyProperties(petDTO, pet);
         pet = petService.savePet(pet, petDTO.getOwnerId());
-        petDTO = getPetDTO(pet);
+        petDTO = convertPetToPetDTO(pet);
         return petDTO;
     }
 
-
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        return getPetDTO(petService.getPetById(petId));
+        return convertPetToPetDTO(petService.getPetById(petId));
     }
 
     @GetMapping
     public List<PetDTO>  getPets(@PathVariable long petId) {
         List<Pet> pets = petService.getAllPets();
-        return pets.stream().map(this::getPetDTO).collect(Collectors.toList());
+        return pets.stream().map(this::convertPetToPetDTO).collect(Collectors.toList());
     }
 
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
         List<Pet> pets = petService.getPetsByCustomerId(ownerId);
-        return pets.stream().map(this::getPetDTO).collect(Collectors.toList());
-        //throw new UnsupportedOperationException();
+        return pets.stream().map(this::convertPetToPetDTO).collect(Collectors.toList());
     }
 
-    private PetDTO getPetDTO(Pet pet) {
+    private PetDTO convertPetToPetDTO(Pet pet) {
         PetDTO petDTO = new PetDTO();
-        petDTO.setId(pet.getId());
-        petDTO.setName(pet.getName());
-        petDTO.setType(pet.getType());
+        BeanUtils.copyProperties(pet, petDTO);
         petDTO.setOwnerId(pet.getCustomer().getId());
-        petDTO.setBirthDate(pet.getBirthDate());
-        petDTO.setNotes(pet.getNotes());
         return petDTO;
     }
 }
